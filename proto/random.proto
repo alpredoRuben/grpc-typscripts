@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package nodegrpc;
+
+// Message (Object) Request and Response
+message PingRequest {
+  string message = 1;
+}
+
+message PongRequest {
+  string message = 1;
+}
+
+message PingResponse {
+  string message = 1;
+}
+
+message NumberRequest {
+  int32 maxValue = 1;
+}
+
+message NumberResponse {
+  int32 numValue = 1;
+}
+
+message TodoRequest  {
+  string title = 1;
+  string status = 2;
+}
+
+message TodoResponse  {
+  repeated TodoRequest todo = 1;
+}
+
+
+// BiDirectional
+message ChatRequest {
+  string message = 1;
+}
+
+message ChatResponse {
+  string username = 1;
+  string message = 2;
+}
+
+// Define services
+service RandomServices {
+  rpc GetPing (PingRequest) returns (PingResponse);
+  rpc GenerateRandomNumber (NumberRequest) returns (stream NumberResponse);
+  rpc TodoList (stream TodoRequest) returns (TodoResponse);
+  rpc Chat (stream ChatRequest) returns (stream ChatResponse);
+}
+
